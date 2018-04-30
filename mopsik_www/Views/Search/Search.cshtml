@@ -1,3 +1,5 @@
+@using mopsik_www.ViewModels
+@model MopListViewModel
 
 @{
     ViewData["Title"] = "Search";
@@ -11,15 +13,20 @@
 </head>
 <body>
     <hr />
-    <a href ="/Employee/AddNew">Add New</a>
-        <div>
-            <table>
+    <div>
+        <table>
+            <tr>
+                <th>Mop</th>
+                <th>Id</th>
+            </tr>
+            @foreach (MopViewModel item in Model.Mops)
+            {
                 <tr>
-                    <th>Employee Name</th>
-                    <th>Salary</th>
+                    <td>@item.Title</td>
+                    <td>@item.Id</td>
                 </tr>
-         
-            </table>
-        </div>
+            }
+        </table>
+    </div>
 </body>
 </html>

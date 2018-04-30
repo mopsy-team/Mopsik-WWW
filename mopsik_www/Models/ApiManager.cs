@@ -10,17 +10,16 @@ namespace mopsik_www.Models
 
         readonly string uri = "http://reach.mimuw.edu.pl:8008/mops/";
 
-        public async Task<string> GetMopsAsync()
+        public async Task<List<Mop>> GetMopsAsync()
         {
 
             using (HttpClient httpClient = new HttpClient())
             {
-                /*
-                return JsonConvert.DeserializeObject<List<Mop>>(
+                
+                return Mop.DeserializeJSON(
                     await httpClient.GetStringAsync(uri)
                 );
-                */
-                return await httpClient.GetStringAsync(uri);
+                
               
             }
         }

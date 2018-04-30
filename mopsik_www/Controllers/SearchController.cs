@@ -12,42 +12,17 @@ namespace mopsik_www.Controllers
     {
         private ApiManager apiManager = new ApiManager();
 
-        public async Task<ActionResult> Search2()
+        public async Task<ActionResult> Search()
         {
+            List<Mop> parsed = await apiManager.GetMopsAsync();
 
             return View("Search",
-                await apiManager.GetMopsAsync()
+               new MopListViewModel(parsed)
             );
         }
 
-        public async Task<string> Search()
-        {
+  
 
-            return await apiManager.GetMopsAsync();
-        }
-
-        public ActionResult AddNew()
-        {
-            return View("CreateEmployee");
-        }
-
-        public ActionResult SaveEmployee(Mop e, string BtnSubmit)
-        {
-            switch (BtnSubmit)
-            {
-                case "Save Employee":
-                    if (ModelState.IsValid)
-                    {
-                        return Content(e.FirstName + "|" + e.LastName + "|" + e.Salary);
-                    }
-                    else
-                    {
-                        return View("CreateEmployee");
-                    }
-                case "Cancel":
-                    return RedirectToAction("Index");
-            }
-            return new EmptyResult();
-        }
+    
     }
 }

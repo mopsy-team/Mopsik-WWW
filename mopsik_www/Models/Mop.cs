@@ -28,6 +28,16 @@ namespace mopsik_www.Models
         public Facilities Facilities { get; set; }
         [JsonProperty("coords")]
         public Coordinates Coordinates { get; set; }
+        [JsonProperty("available")]
+        public SpacesCount Available { get; set; }
+        [JsonProperty("taken")]
+        public SpacesCount Taken { get; set; }
+
+        static public List<Mop> DeserializeJSON(string json)
+        {
+            return JsonConvert.DeserializeObject<Dictionary<int, Mop>>(json).Values.ToList();
+        }
 
     }
+
 }
