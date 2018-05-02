@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace mopsik_www.Models
 {
-    public class Facilities
+    public class FacilitiesParser
     {
         [JsonProperty("monitoring")]
         public bool Monitoring { get; set; }

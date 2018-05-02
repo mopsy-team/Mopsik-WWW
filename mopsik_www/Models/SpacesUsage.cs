@@ -8,20 +8,15 @@ namespace mopsik_www.Models
     public class SpacesUsage
     {
         
-        public double Bus { get; set; }
-        public double Car { get; set; }
-        public double Truck { get; set; }
-
-        private double GetPercentage(int available, int taken)
-        {
-            return ((double)taken / available) * 100;
-        }
+        public Usage Bus { get; set; }
+        public Usage Car { get; set; }
+        public Usage Truck { get; set; }
 
         public SpacesUsage(SpacesCount available, SpacesCount taken)
         {
-            Bus = GetPercentage(available.Bus, taken.Bus);
-            Car = GetPercentage(available.Car, taken.Car);
-            Truck = GetPercentage(available.Truck, taken.Truck);
+            Bus = new Usage(available.Bus, taken.Bus);
+            Car = new Usage(available.Car, taken.Car);
+            Truck = new Usage(available.Truck, taken.Truck);
         }
     }
 }

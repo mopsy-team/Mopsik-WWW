@@ -15,10 +15,28 @@ namespace mopsik_www.ViewModels
         public string RoadNumber { get; set; }
         public string Town { get; set; }
         public Operator Operator { get; set; }
-        public Facilities Facilities { get; set; }
+        public Dictionary<string, bool> Facilities { get; set; }
         public Coordinates Coordinates { get; set; }
         public SpacesCount Available { get; set; }
         public SpacesCount Taken { get; set; }
+        public SpacesUsage Usage { get; set; }
+
+        static public Dictionary<string, bool> ParseFacilities(FacilitiesParser fp)
+        {
+            return new Dictionary<string, bool>()
+            {
+                { "monitoring", fp.Monitoring},
+                { "garage", fp.Garage },
+                { "toilets", fp.Toilets },
+                { "petrol_station", fp.PetrolStation },
+                { "dangerous_cargo_places", fp.DangerousCargoPlaces },
+                { "sleeping_places", fp.SleepingPlaces },
+                { "restaurant", fp.Restaurant },
+                { "car_wash", fp.CarWash },
+                { "security", fp.Lighting },
+                { "lighting", fp.Security },
+            }; ;
+        }
 
         public MopViewModel(Mop m)
         {
@@ -29,10 +47,11 @@ namespace mopsik_www.ViewModels
             RoadNumber = m.RoadNumber;
             Town = m.Town;
             Operator = m.Operator;
-            Facilities = m.Facilities;
+            Facilities = ParseFacilities(m.Facilities);
             Coordinates = m.Coordinates;
             Available = m.Available;
             Taken = m.Taken;
+            Usage = new SpacesUsage(m.Available, m.Taken);
         }
     }
 }

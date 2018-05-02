@@ -1,6 +1,6 @@
 ﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
 <!DOCTYPE html>
-<html>
+<html  lang="pl-PL">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,26 +16,37 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-blue.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/css/style.css">
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #3d6dcc">
         <div class="container">
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Map" asp-action="Map">Mapa</a></li>
-                    <li><a asp-area="" asp-controller="Search" asp-action="Search">Wyszukiwarka</a></li>
+                    <li><img src="https://raw.githubusercontent.com/mopsy-team/Mopsik-Mobile/master/src/images/logo_clear.png" style="height: 40px; margin-top: 4px; margin-right: 20px"/></li>
+                    <li><a asp-area="" asp-controller="Map" asp-action="Map" style="color: white">Mapa</a></li>
+                    <li><a asp-area="" asp-controller="Search" asp-action="Index" style="color: white">Wyszukiwarka</a></li>
                 </ul>
             </div>
-        </div>
+           </div>
     </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>Mopsy Team 2018</p>
-        </footer>
     </div>
+    <footer class="mdl-mini-footer" style="background-color: #3d6dcc">
+        <div class="mdl-mini-footer__left-section">
+            <div class="mdl-logo">Mopsik</div>
+            <ul class="mdl-mini-footer__link-list">
+                <li><a href="https://github.com/mopsy-team/">Mopsy Team</a></li>
+                <li>2018</li>
+            </ul>
+        </div>
+    </footer>
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

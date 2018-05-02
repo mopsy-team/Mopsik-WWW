@@ -25,7 +25,7 @@ namespace mopsik_www.Models
         [JsonProperty("operator")]
         public Operator Operator { get; set; }
         [JsonProperty("facilities")]
-        public Facilities Facilities { get; set; }
+        public FacilitiesParser Facilities { get; set; }
         [JsonProperty("coords")]
         public Coordinates Coordinates { get; set; }
         [JsonProperty("available")]
