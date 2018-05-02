@@ -27,28 +27,28 @@ namespace mopsik_www.Models
 
             if(Value < 35)
             {
-                BackgroundColor = "green";
-                TextColor = "white";
+                BackgroundColor = "#008000"; //green
+                TextColor = "#ffffff"; //white
             }
             else if(Value < 50)
             {
-                BackgroundColor = "yellow";
-                TextColor = "black";
+                BackgroundColor = "#ffff00"; //yellow
+                TextColor = "#000000"; //black
             }
             else if(Value < 75)
             {
-                BackgroundColor = "orange";
-                TextColor = "black";
+                BackgroundColor = "#ffa500"; //orange
+                TextColor = "#000000"; //black
             }
             else if (Value <= 100)
             {
-                BackgroundColor = "red";
-                TextColor = "white";
+                BackgroundColor = "#ff0000"; //red
+                TextColor = "#ffffff"; //white
             }
             else
             {
-                BackgroundColor = "black";
-                TextColor = "white";
+                BackgroundColor = "#000000"; //black
+                TextColor = "#ffffff"; //white
             }
         }
     }

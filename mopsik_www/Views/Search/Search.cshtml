@@ -2,7 +2,7 @@
 @model SearchViewModel
 
 @{
-    ViewData["Title"] = "Search";
+    ViewData["Title"] = "Wyszukiwarka";
 }
 
 <!DOCTYPE html>
@@ -90,7 +90,7 @@
             <tbody>
                 @foreach (MopViewModel mop in Model.MopsView.Mops)
                 {
-                    <tr onclick="window.location='/Map';">
+                    <tr onclick="location.href='@Url.Action("Details", "Details", new {id=@mop.Id})'">
                         <td>@mop.RoadNumber</td>
                         <td class="mdl-data-table__cell--non-numeric">
                             @mop.Title 
@@ -98,17 +98,17 @@
                             <span style="font-size: 12px; color: slategrey">Kierunek: @mop.Direction</span>
                         </td>
                         <td class="usage-row">
-                            <span class="badge" style="background: @mop.Usage.Car.BackgroundColor; color:@mop.Usage.Car.TextColor">
+                            <span class="badge" style="background: @mop.Usage.Car.BackgroundColor; color:@mop.Usage.Car.TextColor; width: 80px; line-height: 20px; font-size: 14px;">
                                 @mop.Usage.Car.PrintValue
                             </span>
                         </td>
                         <td>
-                            <span class="badge" style="background: @mop.Usage.Truck.BackgroundColor; color:@mop.Usage.Truck.TextColor">
+                            <span class="badge" style="background: @mop.Usage.Truck.BackgroundColor; color:@mop.Usage.Truck.TextColor; width: 80px; line-height: 20px; font-size: 14px;">
                                 @mop.Usage.Truck.PrintValue
                             </span>
                         </td>
                         <td>
-                            <span class="badge" style="background: @mop.Usage.Bus.BackgroundColor; color:@mop.Usage.Bus.TextColor">
+                            <span class="badge" style="background: @mop.Usage.Bus.BackgroundColor; color:@mop.Usage.Bus.TextColor; width: 80px; line-height: 20px; font-size: 14px;">
                                 @mop.Usage.Bus.PrintValue
                             </span>
                         </td>

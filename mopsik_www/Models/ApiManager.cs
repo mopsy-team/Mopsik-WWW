@@ -12,15 +12,17 @@ namespace mopsik_www.Models
 
         public async Task<List<Mop>> GetMopsAsync()
         {
-
             using (HttpClient httpClient = new HttpClient())
             {
-                
-                return Mop.DeserializeJSON(
-                    await httpClient.GetStringAsync(uri)
-                );
-                
-              
+                return Mop.DeserializeMops(await httpClient.GetStringAsync(uri));
+            }
+        }
+
+        public async Task<Mop> GetMopAsync(int id)
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                return Mop.DeserializeMop(await httpClient.GetStringAsync(uri), id);
             }
         }
     }

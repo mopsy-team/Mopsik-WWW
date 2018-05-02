@@ -59,7 +59,7 @@ namespace mopsik_www.ViewModels
             Facilities = CreateFacilities();
             FacilitiesConfig = new FacilitiesConfig();
             FiltersJSON = "[]";
-            ResultCount = GetResultCount(0);
+            ResultCount = GetResultCount(mopsView.Mops.Count());
         }
 
         public SearchViewModel(MopListViewModel mopsView, string searchPhrase, Dictionary<string, bool> facilities, string[] filters)

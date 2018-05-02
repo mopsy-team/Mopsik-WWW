@@ -14,11 +14,14 @@ namespace mopsik_www.ViewModels
         public string Direction { get; set; }
         public string RoadNumber { get; set; }
         public string Town { get; set; }
+        public string LatitudePrint { get; set; }
+        public string LongitudePrint { get; set; }
         public Operator Operator { get; set; }
         public Dictionary<string, bool> Facilities { get; set; }
         public Coordinates Coordinates { get; set; }
         public SpacesCount Available { get; set; }
         public SpacesCount Taken { get; set; }
+        public SpacesCount Free { get; set; }
         public SpacesUsage Usage { get; set; }
 
         static public Dictionary<string, bool> ParseFacilities(FacilitiesParser fp)
@@ -51,7 +54,10 @@ namespace mopsik_www.ViewModels
             Coordinates = m.Coordinates;
             Available = m.Available;
             Taken = m.Taken;
+            Free = new SpacesCount(m.Available.Bus - m.Taken.Bus, m.Available.Car - m.Taken.Car, m.Available.Truck - m.Taken.Truck);
             Usage = new SpacesUsage(m.Available, m.Taken);
+            LatitudePrint = m.Coordinates.Latitude.ToString("n4");
+            LongitudePrint = m.Coordinates.Longitude.ToString("n4");
         }
     }
 }

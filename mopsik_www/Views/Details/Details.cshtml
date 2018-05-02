@@ -1,0 +1,137 @@
+﻿@using mopsik_www.ViewModels
+@model DetailsViewModel
+
+@{
+    ViewData["Title"] = @Model.MopView.Title;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MyView</title>
+    <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>
+    <script type="text/javascript">
+        function createCircle(value, valueColor, id) {
+            console.log(value, valueColor, id)
+            var perc = value / 100;
+            var settings = {
+                color: 'green',
+                trailColor: 'lightgray',
+                trailWidth: 6,
+                duration: 5000,
+                easing: 'bounce',
+                strokeWidth: 6,
+                step: function (state, circle) {
+                    circle.path.setAttribute('stroke', state.color);
+                }
+            };
+            var bar = new ProgressBar.Circle(document.getElementById(id), settings);
+            var opts = {
+                from: { color: '#008000' },
+                to: { color: valueColor }
+            };
+            bar.animate(perc, opts);
+        }
+        window.onload = function () {
+            createCircle(parseFloat(@Model.MopView.Usage.Car.Value), '@Model.MopView.Usage.Car.BackgroundColor', "usage-circle-car");
+            createCircle(parseFloat(@Model.MopView.Usage.Truck.Value), '@Model.MopView.Usage.Truck.BackgroundColor', "usage-circle-truck");
+            createCircle(parseFloat(@Model.MopView.Usage.Bus.Value), '@Model.MopView.Usage.Bus.BackgroundColor', "usage-circle-bus");
+        }
+    </script>
+</head>
+<body>
+    <div style="display:inline-flex; width: 100%;">
+        <div style="width:70%;">
+            <h1>@Model.MopView.Title</h1>
+            <h4><b>Kierunek:</b> @Model.MopView.Direction</h4>
+            <h4><b>Droga:</b> @Model.MopView.RoadNumber</h4>
+            <h4><b>Miejscowosc:</b> @Model.MopView.Town</h4>
+            <span><b>Pikietaz:</b> @Model.MopView.Chainage</span><br/>
+            <span><b>Wspolrzedne:</b> @Model.MopView.LatitudePrint N&#176    @Model.MopView.LongitudePrint E&#176</span><br/>
+            <span><b>Operator:</b> @Model.MopView.Operator.Name</span><br />
+            <span><b>Email operatora:</b> @Model.MopView.Operator.Email</span><br />
+            <span><b>Numer telefonu operatora:</b> @Model.MopView.Operator.Phone</span><br />
+            <hr/>
+            <h4>Miejsca parkingowe</h4>
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">directions_car</i><br/>Samochod osobowy</th>
+                        <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">local_shipping</i><br />Samochod ciezarowy</th>
+                        <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">directions_bus</i><br />Autobus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            Zapelnienie
+                        </td>
+                        <td class="usage-row">
+                            <div id="usage-graph-car">
+                                <span id="usage-car">@Model.MopView.Usage.Car.PrintValue</span>
+                                <div id="usage-circle-car"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div id="usage-graph-truck">
+                                <span id="usage-truck">@Model.MopView.Usage.Truck.PrintValue</span>
+                                <div id="usage-circle-truck"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div id="usage-graph-bus">
+                                <span id="usage-bus">@Model.MopView.Usage.Bus.PrintValue</span>
+                                <div id="usage-circle-bus"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            Wolne miejsca
+                        </td>
+                        <td>@Model.MopView.Free.Car</td>
+                        <td>@Model.MopView.Free.Truck</td>
+                        <td>@Model.MopView.Free.Bus</td>
+                    </tr>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            Zajete miejsca
+                        </td>
+                        <td>@Model.MopView.Taken.Car</td>
+                        <td>@Model.MopView.Taken.Truck</td>
+                        <td>@Model.MopView.Taken.Bus</td>
+                    </tr>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            Calkowita liczba miejsc
+                        </td>
+                        <td>@Model.MopView.Available.Car</td>
+                        <td>@Model.MopView.Available.Truck</td>
+                        <td>@Model.MopView.Available.Bus</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        <div style="display: flex; justify-content: center; width: 30%; align-items: center;">
+            <div class="demo-list-action mdl-list">
+                @foreach (KeyValuePair<string, mopsik_www.Models.Facility> fac in Model.FacilitiesConfig.Facilities)
+                {
+                    <div class="mdl-list__item">
+                        <span class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-avatar" style="background-color: white; color: @Model.IconColor[@Model.MopView.Facilities[@fac.Key]];">@fac.Value.IconName</i>
+                            <span style="color: @Model.TextColor[@Model.MopView.Facilities[@fac.Key]]">@fac.Value.PolishName</span>
+                        </span>
+                        &nbsp;
+                        <i class="material-icons" style="color: @Model.AvailableColor[@Model.MopView.Facilities[@fac.Key]]">@Model.AvailableIcon[@Model.MopView.Facilities[@fac.Key]]</i>
+                    </div >
+
+                }
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
