@@ -13,10 +13,26 @@ namespace mopsik_www.Controllers
     {
         private ApiManager apiManager = new ApiManager();
 
+        private bool SearchConditionWord(MopViewModel mop, string searchPhrase)
+        {
+            return (mop.Title.ToLower().Contains(searchPhrase)) || (mop.RoadNumber.ToLower().Contains(searchPhrase)) ||
+                (mop.Direction.ToLower().Contains(searchPhrase)) || (mop.Town.ToLower().Contains(searchPhrase));
+        }
+
         private bool SearchCondition(MopViewModel mop, string searchPhrase)
         {
-            return (searchPhrase == null) || (mop.Title.ToLower().Contains(searchPhrase)) || (mop.RoadNumber.ToLower().Contains(searchPhrase)) ||
-                (mop.Direction.ToLower().Contains(searchPhrase)) || (mop.Town.ToLower().Contains(searchPhrase));
+            if (searchPhrase == null)
+            {
+                return true;
+            }
+            foreach(string word in searchPhrase.Split())
+            {
+                if(! SearchConditionWord(mop, word))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private bool FilterCondition(MopViewModel mop, string[] filters)

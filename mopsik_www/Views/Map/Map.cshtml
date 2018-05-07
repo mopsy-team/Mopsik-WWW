@@ -1,47 +1,76 @@
-﻿@{
+﻿@using mopsik_www.ViewModels
+@model MapViewModel
+
+@{
     ViewData["Title"] = "Mapa";
 }
 
 
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js" type="text/javascript"></script>
+    <title>OpenLayers example</title>
+</head>
+<body>
+    <div id="map" class="map"></div>
+    <script type="text/javascript">
+        var feats = [];
 
-<div class="row">
-    <div class="col-md-3">
-        <h2>Application uses</h2>
-        <ul>
-            <li>Sample pages using ASP.NET Core MVC</li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518004">Bower</a> for managing client-side libraries</li>
-            <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699318">Add client packages using Bower.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Run & Deploy</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
-        </ul>
-    </div>
-</div>
+        function convertToFloat(x, y) {
+            return parseFloat(x.toString() + "." + y.toString());
+        }
+
+    </script>
+    @foreach (MopViewModel mop in Model.MopsView.Mops) {
+        <script type="text/javascript">
+            var startMarker = new ol.Feature({
+                type: 'icon',
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([convertToFloat(@mop.Coordinates.Longitude), convertToFloat(@mop.Coordinates.Latitude)]))
+            });
+
+            startMarker.setStyle(new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [0.5, 1],
+                    color: '@mop.Usage.Car.BackgroundColor',
+                    crossOrigin: 'anonymous',
+                    src: 'images/parking_white_small.png',
+                })
+            }));
+            feats.push(startMarker);
+        </script>
+     }
+        <script type="text/javascript">
+
+        var vectorLayer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: feats
+            }),
+        });
+
+
+        var map = new ol.Map({
+            target: 'map',
+            loadTilesWhileAnimating: true,
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                }),
+                vectorLayer
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([19.1451, 51.9194]),
+                zoom: 6,
+                minZoom: 2
+            })
+        });
+    </script>
+</body>
+</html>

@@ -53,7 +53,7 @@ namespace mopsik_www
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Map}/{action=Map}/{id?}");
+                    template: "{controller=Map}/{action=Index}");
             });
         }
     }

@@ -13,7 +13,6 @@
     <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>
     <script type="text/javascript">
         function createCircle(value, valueColor, id) {
-            console.log(value, valueColor, id)
             var perc = value / 100;
             var settings = {
                 color: 'green',
@@ -52,7 +51,7 @@
             <span><b>Operator:</b> @Model.MopView.Operator.Name</span><br />
             <span><b>Email operatora:</b> @Model.MopView.Operator.Email</span><br />
             <span><b>Numer telefonu operatora:</b> @Model.MopView.Operator.Phone</span><br />
-            <hr/>
+            <hr style="margin-right: 10px"/>
             <h4>Miejsca parkingowe</h4>
             <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                 <thead>
