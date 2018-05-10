@@ -18,5 +18,15 @@ namespace mopsik_www.Models
             Car = new Usage(available.Car, taken.Car);
             Truck = new Usage(available.Truck, taken.Truck);
         }
+
+        public Dictionary<String, Usage> ToDict()
+        {
+            return new Dictionary<String, Usage>()
+            {
+                {"car", Car },
+                {"bus", Bus },
+                {"truck", Truck }
+            };
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace mopsik_www.Models
         [JsonProperty("facilities")]
         public FacilitiesParser Facilities { get; set; }
         [JsonProperty("coords")]
-        public Coordinates Coordinates { get; set; }
+        public CoordinatesParser Coordinates { get; set; }
         [JsonProperty("available")]
         public SpacesCount Available { get; set; }
         [JsonProperty("taken")]

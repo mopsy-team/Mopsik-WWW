@@ -51,13 +51,11 @@ namespace mopsik_www.ViewModels
             Town = m.Town;
             Operator = m.Operator;
             Facilities = ParseFacilities(m.Facilities);
-            Coordinates = m.Coordinates;
+            Coordinates = new Coordinates(m.Coordinates.Longitude, m.Coordinates.Latitude);
             Available = m.Available;
             Taken = m.Taken;
             Free = new SpacesCount(m.Available.Bus - m.Taken.Bus, m.Available.Car - m.Taken.Car, m.Available.Truck - m.Taken.Truck);
             Usage = new SpacesUsage(m.Available, m.Taken);
-            LatitudePrint = m.Coordinates.Latitude.ToString("n4");
-            LongitudePrint = m.Coordinates.Longitude.ToString("n4");
         }
     }
 }

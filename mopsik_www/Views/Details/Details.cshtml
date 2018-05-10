@@ -9,7 +9,14 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>MyView</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height: 50%;
+            width: 100%;
+        }
+    </style>
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js" type="text/javascript"></script>
     <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>
     <script type="text/javascript">
         function createCircle(value, valueColor, id) {
@@ -32,10 +39,49 @@
             };
             bar.animate(perc, opts);
         }
+
+        var marker = new ol.Feature({
+            type: 'icon',
+            geometry: new ol.geom.Point(ol.proj.fromLonLat([parseFloat("@Model.MopView.Coordinates.LongitudeString"), parseFloat("@Model.MopView.Coordinates.LatitudeString")])),
+
+        });
+
+        marker.setStyle(new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 1],
+                src: '/images/parking_small.png',
+                scale: 0.7
+            })
+        }));
+
+        var markerLayer = new ol.layer.Vector({
+                    source: new ol.source.Vector({
+                    features: [marker]
+            }),
+        });
+
+
+
         window.onload = function () {
             createCircle(parseFloat(@Model.MopView.Usage.Car.Value), '@Model.MopView.Usage.Car.BackgroundColor', "usage-circle-car");
             createCircle(parseFloat(@Model.MopView.Usage.Truck.Value), '@Model.MopView.Usage.Truck.BackgroundColor', "usage-circle-truck");
             createCircle(parseFloat(@Model.MopView.Usage.Bus.Value), '@Model.MopView.Usage.Bus.BackgroundColor', "usage-circle-bus");
+
+            var map = new ol.Map({
+                target: 'map',
+                loadTilesWhileAnimating: true,
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    }),
+                    markerLayer
+                ],
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([parseFloat("@Model.MopView.Coordinates.LongitudeString"), parseFloat("@Model.MopView.Coordinates.LatitudeString")]),
+                    zoom: 7,
+                    minZoom: 2
+                })
+            });
         }
     </script>
 </head>
@@ -46,18 +92,18 @@
             <h4><b>Kierunek:</b> @Model.MopView.Direction</h4>
             <h4><b>Droga:</b> @Model.MopView.RoadNumber</h4>
             <h4><b>Miejscowosc:</b> @Model.MopView.Town</h4>
-            <span><b>Pikietaz:</b> @Model.MopView.Chainage</span><br/>
-            <span><b>Wspolrzedne:</b> @Model.MopView.LatitudePrint N&#176    @Model.MopView.LongitudePrint E&#176</span><br/>
+            <span><b>Pikietaz:</b> @Model.MopView.Chainage</span><br />
+            <span><b>Wspolrzedne:</b> @Model.MopView.Coordinates.LatitudePrint&#176 N    @Model.MopView.Coordinates.LongitudePrint&#176 E</span><br />
             <span><b>Operator:</b> @Model.MopView.Operator.Name</span><br />
             <span><b>Email operatora:</b> @Model.MopView.Operator.Email</span><br />
             <span><b>Numer telefonu operatora:</b> @Model.MopView.Operator.Phone</span><br />
-            <hr style="margin-right: 10px"/>
+            <hr style="margin-right: 10px" />
             <h4>Miejsca parkingowe</h4>
             <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                 <thead>
                     <tr>
                         <th></th>
-                        <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">directions_car</i><br/>Samochod osobowy</th>
+                        <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">directions_car</i><br />Samochod osobowy</th>
                         <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">local_shipping</i><br />Samochod ciezarowy</th>
                         <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">directions_bus</i><br />Autobus</th>
                     </tr>
@@ -110,7 +156,7 @@
                         <td>@Model.MopView.Available.Truck</td>
                         <td>@Model.MopView.Available.Bus</td>
                     </tr>
-                    
+
                 </tbody>
             </table>
         </div>
@@ -125,12 +171,14 @@
                         </span>
                         &nbsp;
                         <i class="material-icons" style="color: @Model.AvailableColor[@Model.MopView.Facilities[@fac.Key]]">@Model.AvailableIcon[@Model.MopView.Facilities[@fac.Key]]</i>
-                    </div >
+                    </div>
 
                 }
             </div>
         </div>
+        
     </div>
-
+    <hr/>
+    <div id="map" class="map"></div>
 </body>
 </html>
