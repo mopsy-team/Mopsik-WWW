@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using mopsik_www.Models;
 using mopsik_www.ViewModels;
 using Newtonsoft.Json;
-//using System.Web;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 
 namespace mopsik_www.Controllers
 {
@@ -73,7 +73,6 @@ namespace mopsik_www.Controllers
         public async Task<ActionResult> Index()
         {
             List<Mop> parsed = await apiManager.GetMopsAsync();
-            //HttpContext.Current.Application["mops"] = new MopListViewModel(parsed);
             MopListViewModel mopsView = new MopListViewModel(parsed);
             return View("Search", new SearchViewModel(mopsView, null));
         }

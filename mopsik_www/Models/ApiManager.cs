@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Net.Http;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace mopsik_www.Models
 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace mopsik_www.Models
+﻿namespace mopsik_www.Models
 {
     public class Usage
     {

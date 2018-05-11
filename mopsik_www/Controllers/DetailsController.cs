@@ -1,11 +1,7 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using mopsik_www.Models;
 using mopsik_www.ViewModels;
-using Newtonsoft.Json;
-//using System.Web;
 
 namespace mopsik_www.Controllers
 {
