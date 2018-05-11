@@ -12,11 +12,18 @@ namespace mopsik_www.Controllers
     {
         private ApiManager apiManager = new ApiManager();
 
-        public async Task<ActionResult> Index(int id)
+        public async Task<ActionResult> Index()
         {
             List<Mop> parsed = await apiManager.GetMopsAsync();
             MopListViewModel mopsView = new MopListViewModel(parsed);
-            return View("Map", new MapViewModel(mopsView));
+            return View("Map", new MapViewModel(mopsView, "car"));
+        }
+        
+        public async Task<ActionResult> SetVehicleType(string vehicleType)
+        {
+            List<Mop> parsed = await apiManager.GetMopsAsync();
+            MopListViewModel mopsView = new MopListViewModel(parsed);
+            return View("Map", new MapViewModel(mopsView, vehicleType));
         }
     }
 }

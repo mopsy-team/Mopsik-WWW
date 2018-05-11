@@ -91,9 +91,9 @@
             <h1>@Model.MopView.Title</h1>
             <h4><b>Kierunek:</b> @Model.MopView.Direction</h4>
             <h4><b>Droga:</b> @Model.MopView.RoadNumber</h4>
-            <h4><b>Miejscowosc:</b> @Model.MopView.Town</h4>
-            <span><b>Pikietaz:</b> @Model.MopView.Chainage</span><br />
-            <span><b>Wspolrzedne:</b> @Model.MopView.Coordinates.LatitudePrint&#176 N    @Model.MopView.Coordinates.LongitudePrint&#176 E</span><br />
+            <h4><b>Miejscowość:</b> @Model.MopView.Town</h4>
+            <span><b>Pikietaż:</b> @Model.MopView.Chainage</span><br />
+            <span><b>Współrzędne:</b> @Model.MopView.Coordinates.LatitudePrint&#176 N    @Model.MopView.Coordinates.LongitudePrint&#176 E</span><br />
             <span><b>Operator:</b> @Model.MopView.Operator.Name</span><br />
             <span><b>Email operatora:</b> @Model.MopView.Operator.Email</span><br />
             <span><b>Numer telefonu operatora:</b> @Model.MopView.Operator.Phone</span><br />
@@ -103,15 +103,15 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">directions_car</i><br />Samochod osobowy</th>
-                        <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">local_shipping</i><br />Samochod ciezarowy</th>
+                        <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">directions_car</i><br />Samochód osobowy</th>
+                        <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">local_shipping</i><br />Samochód ciężarowy</th>
                         <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">directions_bus</i><br />Autobus</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td class="mdl-data-table__cell--non-numeric">
-                            Zapelnienie
+                            Zapełnienie
                         </td>
                         <td class="usage-row">
                             <div id="usage-graph-car">
@@ -142,7 +142,7 @@
                     </tr>
                     <tr>
                         <td class="mdl-data-table__cell--non-numeric">
-                            Zajete miejsca
+                            Zajęte miejsca
                         </td>
                         <td>@Model.MopView.Taken.Car</td>
                         <td>@Model.MopView.Taken.Truck</td>
@@ -150,7 +150,7 @@
                     </tr>
                     <tr>
                         <td class="mdl-data-table__cell--non-numeric">
-                            Calkowita liczba miejsc
+                            Całkowita liczba miejsc
                         </td>
                         <td>@Model.MopView.Available.Car</td>
                         <td>@Model.MopView.Available.Truck</td>
