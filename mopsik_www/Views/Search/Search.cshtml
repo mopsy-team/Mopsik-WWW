@@ -1,0 +1,122 @@
+@using mopsik_www.ViewModels
+@model SearchViewModel
+
+@{
+    ViewData["Title"] = "Wyszukiwarka";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MyView</title>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("Search", "Search", FormMethod.Post, new { id = "searchForm", style = "display:inline-block" }))
+        {
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:400px">
+                @if (@Model.SearchPhrase != null)
+                {
+                    <input class="mdl-textfield__input" type="text" id="searchPhrase" name="searchPhrase" value='@Model.SearchPhrase'>
+                }
+                @if (@Model.SearchPhrase == null)
+                {
+                    <input class="mdl-textfield__input" type="text" id="searchPhrase" name="searchPhrase">
+                }
+                <input type="hidden" name="filtersJSON" value=@Model.FiltersJSON>
+                <label class="mdl-textfield__label" for="searchPhrase">Szukaj...</label>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" type="submit" form="searchForm" value="Submit" id="submitSearch">
+                Szukaj
+            </button>
+        }
+        &nbsp;
+        @using (Html.BeginForm("ClearSearch", "Search", FormMethod.Post, new { id = "clearSearchForm", style = "display:inline-block" }))
+        {
+            <input type="hidden" name="filtersJSON" value=@Model.FiltersJSON>
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" type="submit" form="clearSearchForm">
+                <i class="material-icons">clear</i>
+            </button>
+
+        }
+    </div>
+    <div>
+        @using (Html.BeginForm("Filter", "Search", FormMethod.Post, new { id = "filterForm", style = "display:inline-block" }))
+        {
+            <div style="width:400px; display:inline-block">
+                @foreach (KeyValuePair<string, mopsik_www.Models.Facility> fac in Model.FacilitiesConfig.Facilities)
+                {
+                    <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="icon-toggle-@fac.Key" title=@fac.Value.PolishName>
+                        <input type="checkbox" id="icon-toggle-@fac.Key" class="mdl-icon-toggle__input"
+                               checked=@Model.Facilities[@fac.Key] value="@fac.Key" name="checkedIcon[]">
+                        <i class="mdl-icon-toggle__label material-icons">@fac.Value.IconName</i>
+                    </label>
+                }
+            </div>
+            <input type="hidden" name="searchPhrase" value=@Model.SearchPhrase>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" form="filterForm" value="Submit" id="submitFilter">
+                Filtruj
+            </button>
+        }
+        &nbsp;
+        @using (Html.BeginForm("ClearFilter", "Search", FormMethod.Post, new { id = "clearFilterForm", style = "display:inline-block" }))
+        {
+            <input type="hidden" name="searchPhrase" value=@Model.SearchPhrase>
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" type="submit" form="clearFilterForm">
+                <i class="material-icons">clear</i>
+            </button>
+
+        }
+      </div>
+    @if (@Model.SearchPhrase != null)
+    {
+        <span><b>Wyniki wyszukiwania dla: </b>@Model.SearchPhrase</span>
+    }
+    <span style="margin-left: 20px">(@Model.ResultCount)</span>
+    <hr />
+    <div>
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+            <thead>
+                <tr>
+                    <th>Numer drogi</th>
+                    <th class="mdl-data-table__cell--non-numeric">MOP</th>
+                    <th><i class="material-icons" style="color: cornflowerblue">directions_car</i></th>
+                    <th><i class="material-icons" style="color: cornflowerblue">local_shipping</i></th>
+                    <th><i class="material-icons" style="color: cornflowerblue">directions_bus</i></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (MopViewModel mop in Model.MopsView.Mops)
+                {
+                    <tr onclick="location.href='@Url.Action("Details", "Details", new {id=@mop.Id})'">
+                        <td>@mop.RoadNumber</td>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            @mop.Title 
+                            <br/>
+                            <span style="font-size: 12px; color: slategrey">Kierunek: @mop.Direction</span>
+                        </td>
+                        <td class="usage-row">
+                            <span class="badge" style="background: @mop.Usage.Car.BackgroundColor; color:@mop.Usage.Car.TextColor; width: 80px; line-height: 20px; font-size: 14px;">
+                                @mop.Usage.Car.PrintValue
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge" style="background: @mop.Usage.Truck.BackgroundColor; color:@mop.Usage.Truck.TextColor; width: 80px; line-height: 20px; font-size: 14px;">
+                                @mop.Usage.Truck.PrintValue
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge" style="background: @mop.Usage.Bus.BackgroundColor; color:@mop.Usage.Bus.TextColor; width: 80px; line-height: 20px; font-size: 14px;">
+                                @mop.Usage.Bus.PrintValue
+                            </span>
+                        </td>
+                        <td><a><i class="material-icons">chevron_right</i></a></td>
+                    </tr>
+                }
+             </tbody>
+         </table>
+    </div>
+</body>
+</html>

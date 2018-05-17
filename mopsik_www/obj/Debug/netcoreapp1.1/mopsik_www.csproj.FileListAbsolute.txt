@@ -1,0 +1,10 @@
+C:\Users\klaks\Desktop\mopsik_www\mopsik_www\bin\Debug\netcoreapp1.1\mopsik_www.deps.json
+C:\Users\klaks\Desktop\mopsik_www\mopsik_www\bin\Debug\netcoreapp1.1\mopsik_www.runtimeconfig.json
+C:\Users\klaks\Desktop\mopsik_www\mopsik_www\bin\Debug\netcoreapp1.1\mopsik_www.runtimeconfig.dev.json
+C:\Users\klaks\Desktop\mopsik_www\mopsik_www\bin\Debug\netcoreapp1.1\mopsik_www.dll
+C:\Users\klaks\Desktop\mopsik_www\mopsik_www\obj\Debug\netcoreapp1.1\mopsik_www.csprojResolveAssemblyReference.cache
+C:\Users\klaks\Desktop\mopsik_www\mopsik_www\obj\Debug\netcoreapp1.1\mopsik_www.csproj.CoreCompileInputs.cache
+C:\Users\klaks\Desktop\mopsik_www\mopsik_www\obj\Debug\netcoreapp1.1\mopsik_www.AssemblyInfo.cs
+C:\Users\klaks\Desktop\mopsik_www\mopsik_www\bin\Debug\netcoreapp1.1\mopsik_www.pdb
+C:\Users\klaks\Desktop\mopsik_www\mopsik_www\obj\Debug\netcoreapp1.1\mopsik_www.dll
+C:\Users\klaks\Desktop\mopsik_www\mopsik_www\obj\Debug\netcoreapp1.1\mopsik_www.pdb

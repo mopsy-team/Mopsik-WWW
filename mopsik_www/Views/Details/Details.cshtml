@@ -1,0 +1,184 @@
+﻿@using mopsik_www.ViewModels
+@model DetailsViewModel
+
+@{
+    ViewData["Title"] = @Model.MopView.Title;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height: 50%;
+            width: 100%;
+        }
+    </style>
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js" type="text/javascript"></script>
+    <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>
+    <script type="text/javascript">
+        function createCircle(value, valueColor, id) {
+            var perc = value / 100;
+            var settings = {
+                color: 'green',
+                trailColor: 'lightgray',
+                trailWidth: 6,
+                duration: 5000,
+                easing: 'bounce',
+                strokeWidth: 6,
+                step: function (state, circle) {
+                    circle.path.setAttribute('stroke', state.color);
+                }
+            };
+            var bar = new ProgressBar.Circle(document.getElementById(id), settings);
+            var opts = {
+                from: { color: '#008000' },
+                to: { color: valueColor }
+            };
+            bar.animate(perc, opts);
+        }
+
+        var marker = new ol.Feature({
+            type: 'icon',
+            geometry: new ol.geom.Point(ol.proj.fromLonLat([parseFloat("@Model.MopView.Coordinates.LongitudeString"), parseFloat("@Model.MopView.Coordinates.LatitudeString")])),
+
+        });
+
+        marker.setStyle(new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 1],
+                src: '/images/parking_small.png',
+                scale: 0.7
+            })
+        }));
+
+        var markerLayer = new ol.layer.Vector({
+                    source: new ol.source.Vector({
+                    features: [marker]
+            }),
+        });
+
+
+
+        window.onload = function () {
+            createCircle(parseFloat(@Model.MopView.Usage.Car.Value), '@Model.MopView.Usage.Car.BackgroundColor', "usage-circle-car");
+            createCircle(parseFloat(@Model.MopView.Usage.Truck.Value), '@Model.MopView.Usage.Truck.BackgroundColor', "usage-circle-truck");
+            createCircle(parseFloat(@Model.MopView.Usage.Bus.Value), '@Model.MopView.Usage.Bus.BackgroundColor', "usage-circle-bus");
+
+            var map = new ol.Map({
+                target: 'map',
+                loadTilesWhileAnimating: true,
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    }),
+                    markerLayer
+                ],
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([parseFloat("@Model.MopView.Coordinates.LongitudeString"), parseFloat("@Model.MopView.Coordinates.LatitudeString")]),
+                    zoom: 7,
+                    minZoom: 2
+                })
+            });
+        }
+    </script>
+</head>
+<body>
+    <div style="display:inline-flex; width: 100%;">
+        <div style="width:70%;">
+            <h1>@Model.MopView.Title</h1>
+            <h4><b>Kierunek:</b> @Model.MopView.Direction</h4>
+            <h4><b>Droga:</b> @Model.MopView.RoadNumber</h4>
+            <h4><b>Miejscowość:</b> @Model.MopView.Town</h4>
+            <span><b>Pikietaż:</b> @Model.MopView.Chainage</span><br />
+            <span><b>Współrzędne:</b> @Model.MopView.Coordinates.LatitudePrint&#176 N    @Model.MopView.Coordinates.LongitudePrint&#176 E</span><br />
+            <span><b>Operator:</b> @Model.MopView.Operator.Name</span><br />
+            <span><b>Email operatora:</b> @Model.MopView.Operator.Email</span><br />
+            <span><b>Numer telefonu operatora:</b> @Model.MopView.Operator.Phone</span><br />
+            <hr style="margin-right: 10px" />
+            <h4>Miejsca parkingowe</h4>
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">directions_car</i><br />Samochód osobowy</th>
+                        <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">local_shipping</i><br />Samochód ciężarowy</th>
+                        <th><i class="material-icons" style="color: cornflowerblue; margin-top: 7px">directions_bus</i><br />Autobus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            Zapełnienie
+                        </td>
+                        <td class="usage-row">
+                            <div id="usage-graph-car">
+                                <span id="usage-car">@Model.MopView.Usage.Car.PrintValue</span>
+                                <div id="usage-circle-car"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div id="usage-graph-truck">
+                                <span id="usage-truck">@Model.MopView.Usage.Truck.PrintValue</span>
+                                <div id="usage-circle-truck"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div id="usage-graph-bus">
+                                <span id="usage-bus">@Model.MopView.Usage.Bus.PrintValue</span>
+                                <div id="usage-circle-bus"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            Wolne miejsca
+                        </td>
+                        <td>@Model.MopView.Free.Car</td>
+                        <td>@Model.MopView.Free.Truck</td>
+                        <td>@Model.MopView.Free.Bus</td>
+                    </tr>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            Zajęte miejsca
+                        </td>
+                        <td>@Model.MopView.Taken.Car</td>
+                        <td>@Model.MopView.Taken.Truck</td>
+                        <td>@Model.MopView.Taken.Bus</td>
+                    </tr>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            Całkowita liczba miejsc
+                        </td>
+                        <td>@Model.MopView.Available.Car</td>
+                        <td>@Model.MopView.Available.Truck</td>
+                        <td>@Model.MopView.Available.Bus</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div style="display: flex; justify-content: center; width: 30%; align-items: center;">
+            <div class="demo-list-action mdl-list">
+                @foreach (KeyValuePair<string, mopsik_www.Models.Facility> fac in Model.FacilitiesConfig.Facilities)
+                {
+                    <div class="mdl-list__item">
+                        <span class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-avatar" style="background-color: white; color: @Model.IconColor[@Model.MopView.Facilities[@fac.Key]];">@fac.Value.IconName</i>
+                            <span style="color: @Model.TextColor[@Model.MopView.Facilities[@fac.Key]]">@fac.Value.PolishName</span>
+                        </span>
+                        &nbsp;
+                        <i class="material-icons" style="color: @Model.AvailableColor[@Model.MopView.Facilities[@fac.Key]]">@Model.AvailableIcon[@Model.MopView.Facilities[@fac.Key]]</i>
+                    </div>
+
+                }
+            </div>
+        </div>
+        
+    </div>
+    <hr/>
+    <div id="map" class="map"></div>
+</body>
+</html>
