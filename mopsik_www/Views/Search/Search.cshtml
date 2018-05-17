@@ -1,4 +1,4 @@
-@using mopsik_www.ViewModels
+﻿@using mopsik_www.ViewModels
 @model SearchViewModel
 
 @{
@@ -96,6 +96,8 @@
                             @mop.Title 
                             <br/>
                             <span style="font-size: 12px; color: slategrey">Kierunek: @mop.Direction</span>
+                            <br/>
+                            <span style="font-size: 12px; color: slategrey">Miejscowość: @mop.Town</span>
                         </td>
                         <td class="usage-row">
                             <span class="badge" style="background: @mop.Usage.Car.BackgroundColor; color:@mop.Usage.Car.TextColor; width: 80px; line-height: 20px; font-size: 14px;">

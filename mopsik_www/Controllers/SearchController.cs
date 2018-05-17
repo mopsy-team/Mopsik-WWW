@@ -11,7 +11,12 @@ namespace mopsik_www.Controllers
 {
     public class SearchController : Controller
     {
-        private ApiManager apiManager = new ApiManager();
+        private ApiManager ApiManager { get; set; }
+
+        public SearchController(AppDataStorage appDataStorage)
+        {
+            ApiManager = new ApiManager(appDataStorage);
+        }
 
         private bool SearchConditionWord(MopViewModel mop, string searchPhrase)
         {
@@ -64,7 +69,7 @@ namespace mopsik_www.Controllers
 
         private async Task<MopListViewModel> GetMopListViewModel(string searchPhrase, string[] filters)
         {
-            List<Mop> parsed = await apiManager.GetMopsAsync();
+            List<Mop> parsed = await ApiManager.GetMopsAsync();
             MopListViewModel mopsView = new MopListViewModel(parsed);
             mopsView.Mops = RunSearchAndFilter(mopsView.Mops, searchPhrase?.ToLower(), filters);
             return mopsView;
@@ -72,7 +77,7 @@ namespace mopsik_www.Controllers
 
         public async Task<ActionResult> Index()
         {
-            List<Mop> parsed = await apiManager.GetMopsAsync();
+            List<Mop> parsed = await ApiManager.GetMopsAsync();
             MopListViewModel mopsView = new MopListViewModel(parsed);
             return View("Search", new SearchViewModel(mopsView, null));
         }
