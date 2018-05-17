@@ -27,7 +27,7 @@
                 <input type="hidden" name="filtersJSON" value=@Model.FiltersJSON>
                 <label class="mdl-textfield__label" for="searchPhrase">Szukaj...</label>
             </div>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" type="submit" form="searchForm" value="Submit" id="submitSearch">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" form="searchForm" value="Submit" id="submitSearch">
                 Szukaj
             </button>
         }
@@ -54,15 +54,15 @@
                     </label>
                 }
             </div>
-            <input type="hidden" name="searchPhrase" value=@Model.SearchPhrase>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" form="filterForm" value="Submit" id="submitFilter">
+            <input type="hidden" name="searchPhrase" value="@Model.SearchPhrase">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" type="submit" form="filterForm" value="Submit" id="submitFilter">
                 Filtruj
             </button>
         }
         &nbsp;
         @using (Html.BeginForm("ClearFilter", "Search", FormMethod.Post, new { id = "clearFilterForm", style = "display:inline-block" }))
         {
-            <input type="hidden" name="searchPhrase" value=@Model.SearchPhrase>
+            <input type="hidden" name="searchPhrase" value="@Model.SearchPhrase">
             <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" type="submit" form="clearFilterForm">
                 <i class="material-icons">clear</i>
             </button>
