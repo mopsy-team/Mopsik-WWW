@@ -47,7 +47,7 @@
             <div style="width:400px; display:inline-block">
                 @foreach (KeyValuePair<string, mopsik_www.Models.Facility> fac in Model.FacilitiesConfig.Facilities)
                 {
-                    <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="icon-toggle-@fac.Key" title=@fac.Value.PolishName>
+                    <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="icon-toggle-@fac.Key" title="@fac.Value.PolishName">
                         <input type="checkbox" id="icon-toggle-@fac.Key" class="mdl-icon-toggle__input"
                                checked=@Model.Facilities[@fac.Key] value="@fac.Key" name="checkedIcon[]">
                         <i class="mdl-icon-toggle__label material-icons">@fac.Value.IconName</i>
