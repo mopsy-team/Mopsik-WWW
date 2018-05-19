@@ -32,12 +32,9 @@ namespace mopsik_www.Models
 
         static public List<Mop> DeserializeMops(string json)
         {
-            return JsonConvert.DeserializeObject<Dictionary<int, Mop>>(json).Values.ToList();
-        }
-
-        static public Mop DeserializeMop(string json, int id)
-        {
-            return JsonConvert.DeserializeObject<Dictionary<int, Mop>>(json)[id];
+            List<Mop> mops = JsonConvert.DeserializeObject<Dictionary<int, Mop>>(json).Values.ToList();
+            mops.Sort((x, y) => x.Town.CompareTo(y.Town));
+            return mops;
         }
 
     }

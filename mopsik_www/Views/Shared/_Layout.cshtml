@@ -17,25 +17,25 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-blue.min.css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-indigo.min.css">
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <link rel="stylesheet" type="text/css" href="~/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
-<body>
+<body style="display: flex; flex-direction: column; justify-content: space-between">
     <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #3d6dcc">
         <div class="container">
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" id="homeNav">
-                    <li><a asp-area="" asp-controller="Map" asp-action="Index" style="color: white; margin: 0px; padding: 0px">
+                    <li id="logo"><a asp-area="" asp-controller="Map" asp-action="Index" style="color: white; margin: 0px; padding: 0px">
                         <img src="~/images/logo_clear.png" style="height: 40px; margin-top: 4px; margin-right: 20px" />
                     </a></li>
                     <li id="map-link"><a asp-area="" asp-controller="Map" asp-action="Index" style="color: white">Mapa</a></li>
                     <li id="search-link"><a asp-area="" asp-controller="Search" asp-action="Index" style="color: white">Wyszukiwarka</a></li>
                 </ul>
             </div>
-           </div>
+         </div>
     </nav>
     <script>
         var tab = $(location).attr('pathname').split("/")[1];
@@ -59,15 +59,17 @@
         @RenderBody()
         <hr />
     </div>
-    <footer class="mdl-mini-footer" style="background-color: #3d6dcc;">
-        <div class="mdl-mini-footer__left-section">
-            <div class="mdl-logo">Mopsik</div>
-            <ul class="mdl-mini-footer__link-list">
-                <li><a href="https://github.com/mopsy-team/" style="color: lightgray">Mopsy Team</a></li>
-                <li style="color: lightgray">2018</li>
-            </ul>
+    <footer class="mdl-mini-footer fixed-bottom" style="background-color: #3d6dcc;" id="footer">
+        <div class="container">
+            <div class="mdl-mini-footer__left-section">
+                <div class="mdl-logo">Mopsik</div>
+                <ul class="mdl-mini-footer__link-list">
+                    <li><a href="https://github.com/mopsy-team/" style="color: lightgray">Mopsy Team</a></li>
+                    <li style="color: lightgray">2018</li>
+                </ul>
+            </div>
         </div>
-    </footer>
+</footer>
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

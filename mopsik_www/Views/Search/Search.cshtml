@@ -1,4 +1,4 @@
-@using mopsik_www.ViewModels
+﻿@using mopsik_www.ViewModels
 @model SearchViewModel
 
 @{
@@ -27,7 +27,7 @@
                 <input type="hidden" name="filtersJSON" value=@Model.FiltersJSON>
                 <label class="mdl-textfield__label" for="searchPhrase">Szukaj...</label>
             </div>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" type="submit" form="searchForm" value="Submit" id="submitSearch">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" form="searchForm" value="Submit" id="submitSearch">
                 Szukaj
             </button>
         }
@@ -47,22 +47,22 @@
             <div style="width:400px; display:inline-block">
                 @foreach (KeyValuePair<string, mopsik_www.Models.Facility> fac in Model.FacilitiesConfig.Facilities)
                 {
-                    <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="icon-toggle-@fac.Key" title=@fac.Value.PolishName>
+                    <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="icon-toggle-@fac.Key" title="@fac.Value.PolishName">
                         <input type="checkbox" id="icon-toggle-@fac.Key" class="mdl-icon-toggle__input"
                                checked=@Model.Facilities[@fac.Key] value="@fac.Key" name="checkedIcon[]">
                         <i class="mdl-icon-toggle__label material-icons">@fac.Value.IconName</i>
                     </label>
                 }
             </div>
-            <input type="hidden" name="searchPhrase" value=@Model.SearchPhrase>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" form="filterForm" value="Submit" id="submitFilter">
+            <input type="hidden" name="searchPhrase" value="@Model.SearchPhrase">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" type="submit" form="filterForm" value="Submit" id="submitFilter">
                 Filtruj
             </button>
         }
         &nbsp;
         @using (Html.BeginForm("ClearFilter", "Search", FormMethod.Post, new { id = "clearFilterForm", style = "display:inline-block" }))
         {
-            <input type="hidden" name="searchPhrase" value=@Model.SearchPhrase>
+            <input type="hidden" name="searchPhrase" value="@Model.SearchPhrase">
             <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" type="submit" form="clearFilterForm">
                 <i class="material-icons">clear</i>
             </button>
@@ -96,6 +96,8 @@
                             @mop.Title 
                             <br/>
                             <span style="font-size: 12px; color: slategrey">Kierunek: @mop.Direction</span>
+                            <br/>
+                            <span style="font-size: 12px; color: slategrey">Miejscowość: @mop.Town</span>
                         </td>
                         <td class="usage-row">
                             <span class="badge" style="background: @mop.Usage.Car.BackgroundColor; color:@mop.Usage.Car.TextColor; width: 80px; line-height: 20px; font-size: 14px;">
